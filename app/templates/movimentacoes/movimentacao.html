@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block header %}
+<div class="page-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="page-title">Histórico de Movimentações</h1>
+
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="{{ url_for('main.admin') }}" class="btn btn-primary-custom">
+          <i class="bi bi-arrow-left-circle"></i> Voltar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+
+
+
+  <!-- Mensagens flash -->
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %} {% for category, message in messages %}
+  <div class="alert alert-{{ category }} alert-dismissible fade show">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %} {% endif %} {% endwith %}
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Tipo</th>
+          <th>Curso</th>
+          <th>Aluno</th>
+          <th>Apostilas</th>
+          <th>Quantidade</th>
+          <th>Usuário</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mov in movimentacoes %}
+        <tr>
+          <td>{{ mov.data.strftime('%d/%m/%Y %H:%M') }}</td>
+          <td>{{ 'Venda' if mov.tipo == 'venda' else 'Entrega' }}</td>
+          <td>{{ mov.curso.nome if mov.curso else '' }}</td>
+          <td>
+            {% if mov.matricula_rel %} {{ mov.matricula_rel.nome }} ({{
+            mov.matricula_rel.codigo }}) {% else %} - {% endif %}
+          </td>
+          <td>
+            {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
+            loop.last %}, {% endif %} {% endfor %}
+          </td>
+          <td>{{ mov.itens|sum(attribute='quantidade') }}</td>
+          <td>{{ mov.usuario.nome }}</td>
+          <td>
+            <form
+              action="{{ url_for('movimentacoes.excluir_movimentacao', id=mov.id) }}"
+              method="POST"
+              class="d-inline"
+            >
+              <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+              />
+              <button type="submit" class="btn btn-danger btn-sm btn-excluir">
+                <i class="bi bi-trash"></i> Excluir
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="8" class="text-center">
+            Nenhuma movimentação registrada
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='js/movimentacao.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Apostila{% endblock %}
+
+{% block extra_css %}
+<style>
+  .edit-container {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.15rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .form-header {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+<div class="page-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="page-title">Editar Apostila</h1>
+        <p class="page-subtitle">ID: {{ apostila.id }}</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="{{ url_for('apostilas.cadastrada') }}" class="btn btn-secondary">
+          <i class="bi bi-arrow-left-circle"></i> Voltar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="edit-container">
+  <div class="form-header">
+    <h3>Informações da Apostila</h3>
+    <p class="text-muted">Atualize os dados da apostila abaixo</p>
+  </div>
+
+  <form method="POST" action="{{ url_for('apostilas.editar_apostila', id=apostila.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="id" class="form-label">ID</label>
+          <input type="text" class="form-control" id="id" value="{{ apostila.id }}" readonly>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="quantidade" class="form-label">Quantidade em Estoque</label>
+          <input type="number" class="form-control" id="quantidade" name="quantidade"
+                 value="{{ apostila.quantidade }}" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="nome" class="form-label">Nome da Apostila</label>
+          <input type="text" class="form-control" id="nome" name="nome"
+                 value="{{ apostila.nome }}" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="curso_id" class="form-label">Curso</label>
+          <select class="form-select" id="curso_id" name="curso_id" required>
+            {% for curso in cursos %}
+              <option value="{{ curso.id }}" {% if curso.id == apostila.curso_id %}selected{% endif %}>
+                {{ curso.nome }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="area" class="form-label">Área</label>
+          <input type="text" class="form-control" id="area" name="area"
+                 value="{{ apostila.area }}">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="paginas" class="form-label">Número de Páginas</label>
+          <input type="number" class="form-control" id="paginas" name="paginas"
+                 value="{{ apostila.paginas }}">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="autor" class="form-label">Autor</label>
+          <input type="text" class="form-control" id="autor" name="autor"
+                 value="{{ apostila.autor }}">
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <button type="submit" class="btn btn-primary-custom">
+        <i class="bi bi-save"></i> Salvar Alterações
+      </button>
+
+      <a href="{{ url_for('apostilas.cadastrada') }}" class="btn btn-secondary">
+        Cancelar
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

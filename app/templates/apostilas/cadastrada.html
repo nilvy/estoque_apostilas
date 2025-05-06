@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block title %}Apostilas Cadastradas{% endblock %}
+
+{% block extra_css %}
+<style>
+  .page-header {
+    background-color: white;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e3e6f0;
+    background-color: var(--color2);
+  }
+
+  .page-title {
+    font-weight: 600;
+    color: var(--color5);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--color4);
+    font-size: 0.9rem;
+  }
+
+  .search-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0.15rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e6f0;
+  }
+
+  .table-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 0.15rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e6f0;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+
+  .table th {
+    font-weight: 600;
+    color: var(--color5);
+    border-top: none;
+    padding: 1rem 0.75rem;
+  }
+
+  .table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+  }
+
+  .btn-primary-custom {
+    background-color: var(--color4);
+    border-color: var(--color4);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary-custom:hover {
+    background-color: var(--color5);
+    border-color: var(--color5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-outline-primary {
+    color: var(--color4);
+    border-color: var(--color4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: var(--color4);
+    border-color: var(--color4);
+    color: white;
+  }
+
+  .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+  }
+
+  .badge-stock {
+    font-size: 0.85em;
+    padding: 0.35em 0.65em;
+    border-radius: 0.25rem;
+  }
+
+  .pagination .page-link {
+    color: var(--color5);
+    border: 1px solid #dee2e6;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: var(--color4);
+    border-color: var(--color4);
+  }
+
+  .pagination .page-link:hover {
+    color: var(--color5);
+    background-color: #e9ecef;
+  }
+
+  .actions-cell {
+    white-space: nowrap;
+  }
+
+  .actions-cell .btn {
+    padding: 0.375rem 0.75rem;
+    margin: 0 0.125rem;
+    font-size: 0.875rem;
+  }
+
+  .stock-low {
+    background-color: #fff3cd;
+  }
+
+  .stock-empty {
+    background-color: #f8d7da;
+  }
+
+  .stock-ok {
+    background-color: #d1e7dd;
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+<div class="page-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="page-title">Apostilas Cadastradas</h1>
+        <p class="page-subtitle">Lista completa de apostilas no sistema</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="{{ url_for('apostilas.nova') }}" class="btn btn-primary-custom me-2">
+          <i class="bi bi-plus-circle me-1"></i> Nova Apostila
+        </a>
+        <a href="{{ url_for('main.admin') }}" class="btn btn-primary-custom me-2y">
+          <i class="bi bi-arrow-left me-1"></i> Voltar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="search-container">
+    <form method="GET" action="{{ url_for('apostilas.cadastrada') }}">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="q"
+                 placeholder="Buscar por título, disciplina ou código..."
+                 value="{{ request.args.get('q', '') }}">
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" name="area">
+            <option value="">Todas áreas</option>
+            {% for area in areas %}
+              <option value="{{ area }}" {% if request.args.get('area')==area %}selected{% endif %}>
+                {{ area }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" name="filter">
+            <option value="">Todos</option>
+            <option value="estoque_baixo" {% if request.args.get('filter')=='estoque_baixo' %}selected{% endif %}>
+              Estoque baixo
+            </option>
+            <option value="sem_estoque" {% if request.args.get('filter')=='sem_estoque' %}selected{% endif %}>
+              Sem estoque
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary-custom w-100">
+            <i class="bi bi-search me-1"></i> Buscar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle" id="apostilasTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Curso</th>
+            <th>Área</th>
+            <th>Páginas</th>
+            <th>Autor</th>
+            <th class="text-center">Quantidade</th>
+            <th class="text-end">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for apostila in apostilas %}
+          <tr id="apostila-{{ apostila.id }}" data-id="{{ apostila.id }}" class="{% if apostila.quantidade <= 0 %}stock-empty{% elif apostila.quantidade < 10 %}stock-low{% else %}stock-ok{% endif %}">
+            <td>{{ apostila.id }}</td>
+            <td>{{ apostila.nome }}</td>
+            <td>{{ apostila.curso.nome if apostila.curso else '-' }}</td>
+            <td>{{ apostila.area }}</td>
+            <td>{{ apostila.paginas }}</td>
+            <td>{{ apostila.autor }}</td>
+            <td class="text-center">
+              <span class="badge rounded-pill {% if apostila.quantidade <= 0 %}bg-danger{% elif apostila.quantidade < 10 %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                {{ apostila.quantidade }}
+              </span>
+            </td>
+            <td class="text-end actions-cell">
+              <a href="{{ url_for('apostilas.editar_apostila', id=apostila.id) }}" class="btn btn-sm btn-outline-primary me-1" title="Editar">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <button class="btn btn-sm btn-outline-danger delete-btn" data-id="{{ apostila.id }}" data-bs-toggle="modal" data-bs-target="#deleteModal" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginação -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <div class="text-muted">
+        Mostrando {{ pagination.page }} de {{ pagination.pages }} páginas
+      </div>
+
+      <ul class="pagination mb-0">
+        {% if pagination.has_prev %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('apostilas.cadastrada', page=pagination.prev_num, q=request.args.get('q'), area=request.args.get('area'), filter=request.args.get('filter')) }}">
+              <i class="bi bi-chevron-left"></i>
+            </a>
+          </li>
+        {% endif %}
+
+        {% for page_num in pagination.iter_pages() %}
+          <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('apostilas.cadastrada', page=page_num, q=request.args.get('q'), area=request.args.get('area'), filter=request.args.get('filter')) }}">
+              {{ page_num }}
+            </a>
+          </li>
+        {% endfor %}
+
+        {% if pagination.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for('apostilas.cadastrada', page=pagination.next_num, q=request.args.get('q'), area=request.args.get('area'), filter=request.args.get('filter')) }}">
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Exclusão -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="deleteForm" method="POST" action="">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Tem certeza que deseja excluir permanentemente a apostila:</p>
+          <p class="fw-bold fs-5" id="apostilaToDelete"></p>
+          <p class="text-danger">Esta ação não pode ser desfeita!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash me-1"></i> Confirmar Exclusão
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Configuração do botão de exclusão
+  document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const id = button.getAttribute('data-id');
+      const row = document.querySelector(`#apostila-${id}`);
+      const apostilaName = row.cells[1].textContent.trim();
+
+      // Atualiza o modal com os dados da apostila
+      document.getElementById('apostilaToDelete').textContent = `${id} - ${apostilaName}`;
+      document.getElementById('deleteForm').action = `/apostilas/excluir/${id}`;
+    });
+  });
+
+  // Submissão do formulário de exclusão
+  document.getElementById('deleteForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Excluindo...';
+
+    try {
+      const response = await fetch(event.target.action, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Mostra mensagem de sucesso
+        const toastHTML = `
+          <div class="toast align-items-center text-white bg-success border-0 show position-fixed top-0 end-0 m-3" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 1100">
+            <div class="d-flex">
+              <div class="toast-body">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                ${result.message}
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', toastHTML);
+
+        // Remove a linha da tabela
+        document.querySelector(`#apostila-${event.target.action.split('/').pop()}`).remove();
+
+        // Remove o toast após 5 segundos
+        setTimeout(() => {
+          document.querySelector('.toast').remove();
+        }, 5000);
+      } else {
+        // Mostra mensagem de erro
+        alert(result.message || 'Erro ao excluir apostila');
+      }
+    } catch (error) {
+      console.error('Erro:', error);
+      alert('Erro na comunicação com o servidor');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+      bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+    }
+  });
+</script>
+{% endblock %}

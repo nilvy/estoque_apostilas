@@ -1,0 +1,309 @@
+{% extends "base.html" %} {% block title %}Dashboard de Movimentações{% endblock
+%} {% block extra_css %}
+<style>
+  .btn-primary-custom:hover {
+    background-color: var(--color5);
+    border-color: var(--color5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-outline-primary {
+    color: var(--color4);
+    border-color: var(--color4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: var(--color4);
+    border-color: var(--color4);
+    color: white;
+  }
+  .card-dashboard {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border: none;
+  }
+  .chart-container {
+    min-height: 300px;
+  }
+  .top-list {
+    list-style: none;
+    padding: 0;
+  }
+  .top-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+{% endblock %} {% block header %}
+<div class="page-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <h1 class="page-title">Dashboard de Movimentações</h1>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="{{ url_for('main.admin') }}" class="btn btn-primary-custom">
+          <i class="bi bi-arrow-left-circle"></i> Voltar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block content %}
+
+<div class="container mt-4">
+  {% with messages = get_flashed_messages(with_categories=true) %} {% if
+  messages %} {% for category, message in messages %}
+  <div class="alert alert-{{ category }} alert-dismissible fade show">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %} {% endif %} {% endwith %}
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-dashboard">
+        <div class="card-header bg-primary text-white">
+          Tipos de Movimentação (Últimos 30 dias)
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="tipoMovimentacoesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card card-dashboard">
+        <div class="card-header bg-info text-white">
+          Categorias Mais Movimentadas
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="categoriasChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="card card-dashboard">
+        <div class="card-header bg-success text-white">
+          Top 5 Cursos com Mais Entregas
+        </div>
+        <div class="card-body">
+          <ul class="top-list">
+            {% for curso in cursos_entregas %}
+            <li>
+              <span>{{ curso.nome }}</span>
+              <span class="badge bg-primary">{{ curso.total }}</span>
+            </li>
+            {% else %}
+            <li class="text-muted">Nenhuma entrega registrada</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card card-dashboard">
+        <div class="card-header bg-warning text-dark">
+          Top 5 Apostilas Mais Vendidas
+        </div>
+        <div class="card-body">
+          <ul class="top-list">
+            {% for apostila in apostilas_vendidas %}
+            <li>
+              <span>{{ apostila.nome }}</span>
+              <span class="badge bg-primary">{{ apostila.total }}</span>
+            </li>
+            {% else %}
+            <li class="text-muted">Nenhuma venda registrada</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card card-dashboard">
+          <div class="card-header bg-danger text-white">
+            Comparativo de Vendas e Entregas ao Longo do Ano
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="min-height: 300px">
+              <canvas id="comparativoAnualChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Configuração básica do Chart.js
+    Chart.defaults.font.family =
+      "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+    Chart.defaults.plugins.legend.position = "bottom";
+
+    // Cores consistentes
+    const colors = {
+      primary: "#4e73df",
+      success: "#1cc88a",
+      info: "#36b9cc",
+      warning: "#f6c23e",
+      danger: "#e74a3b",
+    };
+
+    // Carregar dados da API
+    fetch("/movimentacoes/api/relatorios/dados")
+      .then((response) => {
+        if (!response.ok) throw new Error("Erro na resposta do servidor");
+        return response.json();
+      })
+      .then((data) => {
+        // Gráfico de tipos de movimentação
+        new Chart(document.getElementById("tipoMovimentacoesChart"), {
+          type: "doughnut",
+          data: {
+            labels: data.movimentacoes_por_tipo.map((item) =>
+              item.tipo === "venda" ? "Vendas" : "Entregas"
+            ),
+            datasets: [
+              {
+                data: data.movimentacoes_por_tipo.map((item) => item.total),
+                backgroundColor: [colors.success, colors.primary],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+          },
+        });
+
+        // Gráfico de categorias
+        new Chart(document.getElementById("categoriasChart"), {
+          type: "bar",
+          data: {
+            labels: data.categorias_movimentadas.map((item) => item.categoria),
+            datasets: [
+              {
+                label: "Movimentações",
+                data: data.categorias_movimentadas.map((item) => item.total),
+                backgroundColor: colors.info,
+                borderColor: colors.info,
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            indexAxis: "y",
+            responsive: true,
+            maintainAspectRatio: false,
+          },
+        });
+
+        // Gráfico de linhas - Comparativo Anual
+        const mensalData = Array.from({ length: 12 }, (_, i) => ({
+          mes: i + 1,
+          vendas: 0,
+          entregas: 0,
+        }));
+
+        // Preenchendo os dados mensais com base na API
+        data.movimentacoes_anuais.forEach((item) => {
+          const index = item.mes - 1;
+          if (item.tipo === "venda") {
+            mensalData[index].vendas = item.total;
+          } else if (item.tipo === "entrega") {
+            mensalData[index].entregas = item.total;
+          }
+        });
+
+        new Chart(document.getElementById("comparativoAnualChart"), {
+          type: "line",
+          data: {
+            labels: [
+              "Jan",
+              "Fev",
+              "Mar",
+              "Abr",
+              "Mai",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Set",
+              "Out",
+              "Nov",
+              "Dez",
+            ],
+            datasets: [
+              {
+                label: "Vendas",
+                data: mensalData.map((item) => item.vendas),
+                backgroundColor: colors.primary,
+                borderColor: colors.primary,
+                fill: false,
+                tension: 0.1,
+              },
+              {
+                label: "Entregas",
+                data: mensalData.map((item) => item.entregas),
+                backgroundColor: colors.success,
+                borderColor: colors.success,
+                fill: false,
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Meses",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Quantidade",
+                },
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar dados:", error);
+        // Mostrar mensagem de erro nos containers
+        document.querySelectorAll(".chart-container").forEach((container) => {
+          container.innerHTML = `
+            <div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle"></i>
+                Não foi possível carregar os dados do gráfico
+            </div>`;
+        });
+      });
+  });
+</script>
+{% endblock %}
