@@ -1,9 +1,6 @@
 ﻿alembic==1.15.1
 blinker==1.9.0
-brewer2mpl==1.4.1
 click==8.1.8
-colorama==0.4.6
-contourpy==1.0.7  # Versão compatível com Python 3.9
 Flask==2.3.2
 Flask-Login==0.6.2
 Flask-Migrate==4.0.4
