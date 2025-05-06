@@ -6,6 +6,8 @@ from config import Config
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from flask_migrate import Migrate
+
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -42,6 +44,8 @@ def create_app(config_class=Config):
 
         # Cria tabelas (só executa se não existirem)
         db.create_all()
+        # Após criar a app
+        migrate = Migrate(app, db)
 
         # Configura logging
         if not app.debug:

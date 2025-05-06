@@ -1,12 +1,6 @@
 import os
 
 class Config:
-    # Usa DATABASE_URL do Railway ou sua conexão Neon
-    DATABASE_URL = os.environ.get('DATABASE_URL', 'postgresql://usuario:senha@ep-nome-do-neon.aws-region.aws.neon.tech/nomedb?sslmode=require')
-
-    if DATABASE_URL.startswith('postgres://'):
-        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
-
-    SQLALCHEMY_DATABASE_URI = DATABASE_URL
+    DB_URL = os.getenv('DATABASE_URL', 'postgresql://neondb_owner:npg_l31qaRPvgNFo@ep-lucky-rain-a4sebw1a-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require')
+    SQLALCHEMY_DATABASE_URI = DB_URL.replace('postgres://', 'postgresql://', 1) if DB_URL.startswith('postgres://') else DB_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-secreta')
