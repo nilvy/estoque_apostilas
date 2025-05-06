@@ -1,0 +1,130 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Sistema de notificação melhorado
+  function showAlert(type, message) {
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+    alertDiv.style.zIndex = "1100";
+    alertDiv.innerHTML = `
+      <i class="bi ${
+        type === "success" ? "bi-check-circle" : "bi-exclamation-triangle"
+      } me-2"></i>
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.body.appendChild(alertDiv);
+    setTimeout(() => alertDiv.remove(), 5000);
+  }
+
+  // Configuração do modal de edição
+  const editModal = document.getElementById("editModal");
+  if (editModal) {
+    editModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+      const row = button.closest("tr");
+
+      // Preenche o formulário com os dados da linha
+      document.getElementById("editId").value = button.dataset.id;
+      document.getElementById("editNome").value =
+        row.cells[1].textContent.trim();
+
+      // Preencha os outros campos conforme necessário
+    });
+
+    // Envio do formulário de edição
+    const editForm = document.getElementById("editForm");
+    if (editForm) {
+      editForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const submitButton = this.querySelector('button[type="submit"]');
+
+        submitButton.disabled = true;
+        submitButton.innerHTML =
+          '<span class="spinner-border spinner-border-sm"></span> Salvando...';
+
+        try {
+          const response = await fetch(
+            `/apostilas/editar/${formData.get("id")}`,
+            {
+              method: "POST",
+              body: JSON.stringify(Object.fromEntries(formData)),
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": document.querySelector('meta[name="csrf-token"]')
+                  .content,
+              },
+            }
+          );
+
+          const data = await response.json();
+
+          if (data.success) {
+            showAlert("success", data.message);
+            setTimeout(() => window.location.reload(), 1000);
+          } else {
+            showAlert("danger", data.message || "Erro ao salvar alterações");
+          }
+        } catch (error) {
+          showAlert("danger", "Erro na conexão com o servidor");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Salvar";
+        }
+      });
+    }
+  }
+
+  // Configuração do modal de exclusão
+  const deleteModal = document.getElementById("deleteModal");
+  if (deleteModal) {
+    deleteModal.addEventListener("show.bs.modal", function (event) {
+      const button = event.relatedTarget;
+      const row = button.closest("tr");
+      document.getElementById("deleteId").value = button.dataset.id;
+      document.getElementById(
+        "apostilaToDelete"
+      ).textContent = `${row.cells[0].textContent.trim()} - ${row.cells[1].textContent.trim()}`;
+    });
+
+    const deleteForm = document.getElementById("deleteForm");
+    if (deleteForm) {
+      deleteForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const submitButton = this.querySelector('button[type="submit"]');
+
+        submitButton.disabled = true;
+        submitButton.innerHTML =
+          '<span class="spinner-border spinner-border-sm"></span> Excluindo...';
+
+        try {
+          const response = await fetch(
+            `/apostilas/excluir/${formData.get("id")}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": document.querySelector('meta[name="csrf-token"]')
+                  .content,
+              },
+            }
+          );
+
+          const data = await response.json();
+
+          if (data.success) {
+            showAlert("success", data.message);
+            setTimeout(() => window.location.reload(), 1000);
+          } else {
+            showAlert("danger", data.message || "Erro ao excluir apostila");
+          }
+        } catch (error) {
+          showAlert("danger", "Erro na conexão com o servidor");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Confirmar Exclusão";
+        }
+      });
+    }
+  }
+});
