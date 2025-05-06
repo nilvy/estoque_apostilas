@@ -1,9 +1,12 @@
 import os
+from urllib.parse import urlparse
 
 class Config:
-    # Usa DATABASE_URL do Railway se existir, senão usa a do Neon
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgresql://neondb_owner:npg_l31qaRPvgNFo@ep-lucky-rain-a4sebw1a-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require'
+    DATABASE_URL = os.environ.get('DATABASE_URL')
 
+    if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL or 'sqlite:///instance/estoque.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'sua-chave-secreta-aqui'
-    LOGIN_DISABLED = False
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'sua-chave-secreta-local'
