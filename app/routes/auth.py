@@ -5,6 +5,7 @@ from app.models import Usuario
 
 bp = Blueprint('auth', __name__)
 
+
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
