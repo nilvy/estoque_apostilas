@@ -5,19 +5,30 @@ from datetime import datetime
 from flask import current_app
 from flask_login import UserMixin, current_user
 from app import db, login_manager
+from typing import List, Tuple, cast
+from werkzeug.security import generate_password_hash, check_password_hash
 
+from typing import List, Tuple
 
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuario'
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False, unique=True)
-    senha = db.Column(db.String(255), nullable=False)
+    senha = db.Column(db.String(255), nullable=False)  # Senhas serão armazenadas como hashes
     cpf = db.Column(db.String(14), unique=True)
     data_nascimento = db.Column(db.Date)
     funcao = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
+
+    def set_password(self, password):
+        """Armazena a senha como um hash."""
+        self.senha = generate_password_hash(password)
+
+    def check_password(self, password):
+        """Verifica a senha fornecida com o hash armazenado."""
+        return check_password_hash(self.senha, password)
 
     def get_id(self):
         return str(self.id)
@@ -26,16 +37,14 @@ class Usuario(db.Model, UserMixin):
     movimentacoes = db.relationship('Movimentacao', back_populates='usuario')
     mensagens = db.relationship('Mensagem', back_populates='usuario')
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
 
-
 class Curso(db.Model):
     __tablename__ = 'curso'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)  # Deve ser primary_key
     nome = db.Column(db.String(100), nullable=False)
     duracao = db.Column(db.String(50))
     status = db.Column(db.String(10), server_default='ativo')
@@ -141,26 +150,39 @@ class Mensagem(db.Model):
     usuario = db.relationship('Usuario', back_populates='mensagens')
 
 
-# Formulários (mantidos iguais)
 class EntregaForm(FlaskForm):
     curso_id = SelectField('Curso', coerce=int, validators=[DataRequired()])
     matricula_codigo = SelectField('Matrícula', coerce=str, validators=[Optional()])
     observacao = TextAreaField('Observações', validators=[Optional()])
 
-
 class VendaForm(FlaskForm):
+    # Opções estáticas para tipo de movimentação
+    tipo_choices: List[Tuple[str, str]] = [
+        ('venda', 'Venda'),
+        ('entrega', 'Entrega')
+    ]
+    tipo = SelectField('Tipo de Movimentação', choices=tipo_choices, validators=[DataRequired()])
+
+    # Opções estáticas para status
+    status_choices: List[Tuple[str, str]] = [
+        ('ativo', 'Ativo'),
+        ('inativo', 'Inativo'),
+        ('concluido', 'Concluído')
+    ]
+    status = SelectField('Status', choices=status_choices, validators=[DataRequired()])
+
+    # Outros campos
     curso_id = SelectField('Curso', coerce=int, validators=[DataRequired()])
-    matricula_codigo = SelectField('Matrícula', coerce=str, validators=[DataRequired()])
+    matricula_codigo = SelectField('Matrícula', coerce=str, validators=[Optional()])
     apostila_id = SelectField('Apostila', coerce=str, validators=[DataRequired()])
     quantidade = IntegerField('Quantidade', validators=[DataRequired(), NumberRange(min=1)])
     observacao = TextAreaField('Observações', validators=[Optional()])
 
-    def __init__(self, *args, **kwargs):
-        super(VendaForm, self).__init__(*args, **kwargs)
-        self.curso_id.choices = [(c.id, c.nome) for c in Curso.query.order_by(Curso.nome).all()]
-        self.curso_id.choices.insert(0, ('', 'Selecione um curso'))
-        self.matricula_codigo.choices = [('', 'Selecione um curso primeiro')]
-        self.apostila_id.choices = [('', 'Selecione um curso primeiro')]
+    def carregar_opcoes_dinamicas(self, cursos: List[Tuple[int, str]], matriculas: List[Tuple[str, str]], apostilas: List[Tuple[str, str]]):
+        """Carrega opções dinâmicas para os campos SelectField."""
+        self.curso_id.choices = cursos
+        self.matricula_codigo.choices = matriculas
+        self.apostila_id.choices = apostilas
 
 
 def verificar_estoque_baixo():

@@ -1,3 +1,4 @@
+from flask import flash
 from flask import Blueprint, render_template, redirect, url_for, session, request, jsonify
 from flask_login import login_required, current_user, logout_user
 from app.models import Apostila, Curso  # Adicione esta importação
@@ -5,9 +6,12 @@ from app.models import Apostila, Curso  # Adicione esta importação
 bp = Blueprint('main', __name__)
 
 @bp.route('/')
-@login_required
 def index():
-    return redirect(url_for('main.admin'))
+    # Verifica se o usuário está autenticado
+    if current_user.is_authenticated:
+        return redirect(url_for('main.admin'))
+    else:
+        return redirect(url_for('auth.login'))
 
 @bp.route('/admin')
 @login_required
@@ -20,7 +24,9 @@ def admin():
 @login_required
 def logout():
     logout_user()
-    session.pop('user', None)
+    # Limpa qualquer dado armazenado na sessão
+    session.clear()
+    flash('Você foi deslogado com sucesso', 'info')
     return redirect(url_for('auth.login'))
 
 # Rotas de mensagens e busca
