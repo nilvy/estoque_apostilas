@@ -23,15 +23,12 @@ class Usuario(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
     def set_password(self, password):
-        """Armazena a senha como um hash."""
-        self.senha = generate_password_hash(password)
+        """Armazena a senha como texto simples (não recomendado para produção)."""
+        self.senha = password
 
     def check_password(self, password):
-        """Verifica a senha fornecida com o hash armazenado."""
-        return check_password_hash(self.senha, password)
-
-    def get_id(self):
-        return str(self.id)
+        """Compara a senha fornecida diretamente (não recomendado para produção)."""
+        return self.senha == password
 
     # Relacionamentos
     movimentacoes = db.relationship('Movimentacao', back_populates='usuario')

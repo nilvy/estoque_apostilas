@@ -1,26 +1,10 @@
-2025-04-29 20:55:08,916 INFO: Inicialização do Estoque de Apostilas [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
-2025-04-29 20:55:10,712 INFO: Inicialização do Estoque de Apostilas [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
-2025-05-06 03:04:06,951 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:56]
-2025-05-06 03:04:14,426 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:56]
-2025-05-06 03:04:20,621 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:56]
-2025-05-06 08:47:34,815 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-06 08:47:40,991 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-06 08:47:48,264 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-06 08:48:33,448 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-06 08:49:36,905 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-07 10:53:53,771 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-07 10:59:27,313 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:60]
-2025-05-07 11:23:36,940 ERROR: Exception on /login [POST] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
-Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.OperationalError: SSL SYSCALL error: EOF detected
-
-
-The above exception was the direct cause of the following exception:
-
+2025-05-08 11:09:55,823 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 11:13:21,736 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 11:36:29,033 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 11:54:40,326 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 12:01:03,627 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 12:03:01,260 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 12:03:13,191 ERROR: Exception on /login [POST] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
 Traceback (most recent call last):
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
     response = self.full_dispatch_request()
@@ -34,81 +18,47 @@ Traceback (most recent call last):
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\auth.py", line 26, in login
-    user = Usuario.query.filter_by(nome=username).first()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\query.py", line 2754, in first
-    return self.limit(1)._iter().first()  # type: ignore
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\query.py", line 2853, in _iter
-    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
-                                                  ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
-    return self._execute_internal(
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
-    result: Result[Any] = compile_state_cls.orm_execute_statement(
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\context.py", line 305, in orm_execute_statement
-    result = conn.execute(
-             ^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
-    return meth(
-           ^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
-    return connection._execute_clauseelement(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
-    ret = self._execute_context(
-          ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
-    self._handle_dbapi_exception(
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
-    self.dialect.do_execute(
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) SSL SYSCALL error: EOF detected
-
-[SQL: SELECT usuario.id AS usuario_id, usuario.nome AS usuario_nome, usuario.senha AS usuario_senha, usuario.cpf AS usuario_cpf, usuario.data_nascimento AS usuario_data_nascimento, usuario.funcao AS usuario_funcao, usuario.created_at AS usuario_created_at, usuario.updated_at AS usuario_updated_at 
-FROM usuario 
-WHERE usuario.nome = %(nome_1)s 
- LIMIT %(param_1)s]
-[parameters: {'nome_1': 'Teste', 'param_1': 1}]
-(Background on this error at: https://sqlalche.me/e/20/e3q8)
-2025-05-07 17:30:50,323 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:53]
-2025-05-07 17:36:18,494 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:53]
-2025-05-07 17:41:06,258 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:53]
-2025-05-07 20:05:40,596 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
-2025-05-07 20:52:40,654 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 20:53:03,380 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 20:53:15,361 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:02:29,363 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:12:48,992 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:13:27,306 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:41:10,596 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:41:26,586 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:41:31,406 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:42:03,523 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:43:43,231 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:55:45,171 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 21:55:56,901 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 22:06:03,006 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 22:58:37,740 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:12:17,597 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:12:46,405 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:12:52,027 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:23:50,087 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:34:19,779 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:35:20,826 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:35:34,024 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:46:45,776 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-07 23:58:00,063 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-08 00:27:20,949 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-08 00:37:57,667 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-08 00:42:42,073 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
-2025-05-08 08:43:59,324 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:61]
+  File "C:\Users\nilva\estoque_apostilas\app\routes\auth.py", line 18, in login
+    current_app.logger.debug("Campos de login vazios.")
+    ^^^^^^^^^^^
+NameError: name 'current_app' is not defined. Did you mean: 'current_user'?
+2025-05-08 12:03:49,463 ERROR: Exception on /login [POST] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\routes\auth.py", line 18, in login
+    current_app.logger.debug("Campos de login vazios.")
+    ^^^^^^^^^^^
+NameError: name 'current_app' is not defined. Did you mean: 'current_user'?
+2025-05-08 12:04:17,818 ERROR: Exception on /login [POST] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\routes\auth.py", line 18, in login
+    current_app.logger.debug("Campos de login vazios.")
+    ^^^^^^^^^^^
+NameError: name 'current_app' is not defined. Did you mean: 'current_user'?
+2025-05-08 12:05:55,697 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 12:24:48,378 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:66]
+2025-05-08 12:40:28,413 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-08 12:53:09,325 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]

@@ -1,24 +1,20 @@
-# Python
+# Python e Flask
+*.pyc
+*.pyo
 __pycache__/
-*.py[cod]
-*.so
-.Python
-
-# Environments
-.env
-.venv
+instance/
 env/
 venv/
-ENV/
+*.env
 
-# Database
-*.sqlite
-*.db
+# Credenciais e variáveis de ambiente
+*.key
+*.pem
+*.crt
+.env
 
-# IDE
-.vscode/
-.idea/
+# Banco de dados local
+*.sqlite3
 
-# System
-.DS_Store
-Thumbs.db
+# Arquivos de log
+*.log
