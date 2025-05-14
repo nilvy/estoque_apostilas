@@ -1,0 +1,134 @@
+2025-05-13 22:20:18,948 ERROR: Erro na entrega: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(17) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:102]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(17) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 78, in entrega
+    movimentacao_id=movimentacao.id,
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 938, in flush
+    return self._proxied.flush(objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(17) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-05-13 22:21:41,294 ERROR: Erro na entrega: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(18) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:102]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(18) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 78, in entrega
+    movimentacao_id=movimentacao.id,
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 938, in flush
+    return self._proxied.flush(objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(18) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)

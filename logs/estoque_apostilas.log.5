@@ -1,0 +1,93 @@
+2025-05-13 22:23:03,883 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:29:15,025 ERROR: Erro na entrega: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "item_movimentacao" violates not-null constraint
+DETAIL:  Failing row contains (null, 34, DES_AFT_001, 1).
+
+[SQL: INSERT INTO item_movimentacao (movimentacao_id, apostila_id, quantidade) SELECT p0::INTEGER, p1::VARCHAR, p2::INTEGER FROM (VALUES (%(movimentacao_id__0)s, %(apostila_id__0)s, %(quantidade__0)s, 0), (%(movimentacao_id__1)s, %(apostila_id__1)s, %(quan ... 443 characters truncated ...  p2, sen_counter) ORDER BY sen_counter RETURNING item_movimentacao.id, item_movimentacao.id AS id__1]
+[parameters: {'movimentacao_id__0': 34, 'apostila_id__0': 'DES_AFT_001', 'quantidade__0': 1, 'movimentacao_id__1': 34, 'apostila_id__1': 'DES_COA_001', 'quantidade__1': 1, 'movimentacao_id__2': 34, 'apostila_id__2': 'DES_COR_001', 'quantidade__2': 1, 'movimentacao_id__3': 34, 'apostila_id__3': 'DES_ILL_001', 'quantidade__3': 1, 'movimentacao_id__4': 34, 'apostila_id__4': 'DES_INF_001', 'quantidade__4': 1, 'movimentacao_id__5': 34, 'apostila_id__5': 'DES_PHA_001', 'quantidade__5': 1, 'movimentacao_id__6': 34, 'apostila_id__6': 'DES_PHO_001', 'quantidade__6': 1, 'movimentacao_id__7': 34, 'apostila_id__7': 'DES_PRE_001', 'quantidade__7': 1}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:102]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2115, in _exec_insertmany_context
+    dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "id" of relation "item_movimentacao" violates not-null constraint
+DETAIL:  Failing row contains (null, 34, DES_AFT_001, 1).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 95, in entrega
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 599, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1143, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1841, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2123, in _exec_insertmany_context
+    self._handle_dbapi_exception(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2115, in _exec_insertmany_context
+    dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "item_movimentacao" violates not-null constraint
+DETAIL:  Failing row contains (null, 34, DES_AFT_001, 1).
+
+[SQL: INSERT INTO item_movimentacao (movimentacao_id, apostila_id, quantidade) SELECT p0::INTEGER, p1::VARCHAR, p2::INTEGER FROM (VALUES (%(movimentacao_id__0)s, %(apostila_id__0)s, %(quantidade__0)s, 0), (%(movimentacao_id__1)s, %(apostila_id__1)s, %(quan ... 443 characters truncated ...  p2, sen_counter) ORDER BY sen_counter RETURNING item_movimentacao.id, item_movimentacao.id AS id__1]
+[parameters: {'movimentacao_id__0': 34, 'apostila_id__0': 'DES_AFT_001', 'quantidade__0': 1, 'movimentacao_id__1': 34, 'apostila_id__1': 'DES_COA_001', 'quantidade__1': 1, 'movimentacao_id__2': 34, 'apostila_id__2': 'DES_COR_001', 'quantidade__2': 1, 'movimentacao_id__3': 34, 'apostila_id__3': 'DES_ILL_001', 'quantidade__3': 1, 'movimentacao_id__4': 34, 'apostila_id__4': 'DES_INF_001', 'quantidade__4': 1, 'movimentacao_id__5': 34, 'apostila_id__5': 'DES_PHA_001', 'quantidade__5': 1, 'movimentacao_id__6': 34, 'apostila_id__6': 'DES_PHO_001', 'quantidade__6': 1, 'movimentacao_id__7': 34, 'apostila_id__7': 'DES_PRE_001', 'quantidade__7': 1}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-05-13 22:31:10,881 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:32:16,572 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:57:20,501 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:57:21,066 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:57:25,220 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:05:06,607 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:06:45,059 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,342 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,344 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,345 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,442 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:53,661 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:56,060 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]

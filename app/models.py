@@ -8,8 +8,6 @@ from app import db, login_manager
 from typing import List, Tuple, cast
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from typing import List, Tuple
-
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'usuario'
 
@@ -65,10 +63,9 @@ class Matricula(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    # Relacionamentos
+    # Relacionamento com Curso
     curso = db.relationship('Curso', back_populates='matriculas')
-    movimentacoes = db.relationship('Movimentacao', back_populates='matricula')
-
+    movimentacoes = db.relationship('Movimentacao', foreign_keys='Movimentacao.matricula_codigo')
 
 class Apostila(db.Model):
     __tablename__ = 'apostila'
@@ -101,38 +98,6 @@ class Apostila(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-
-class Movimentacao(db.Model):
-    __tablename__ = 'movimentacao'
-
-    id = db.Column(db.Integer, primary_key=True)
-    curso_id = db.Column(db.Integer, db.ForeignKey('curso.id'), nullable=False)
-    matricula_codigo = db.Column(db.String(20), db.ForeignKey('matricula.codigo'))
-    tipo = db.Column(db.String(10), nullable=False)
-    data = db.Column(db.DateTime, server_default=db.func.now())
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
-    observacao = db.Column(db.Text)
-
-    # Relacionamentos
-    usuario = db.relationship('Usuario', back_populates='movimentacoes')
-    curso = db.relationship('Curso', back_populates='movimentacoes')
-    matricula = db.relationship('Matricula', back_populates='movimentacoes')
-    itens = db.relationship('ItemMovimentacao', back_populates='movimentacao', cascade='all, delete-orphan')
-
-
-class ItemMovimentacao(db.Model):
-    __tablename__ = 'item_movimentacao'
-
-    id = db.Column(db.Integer, primary_key=True)
-    movimentacao_id = db.Column(db.Integer, db.ForeignKey('movimentacao.id'), nullable=False)
-    apostila_id = db.Column(db.String(20), db.ForeignKey('apostila.id'), nullable=True)
-    quantidade = db.Column(db.Integer, nullable=False, server_default='1')
-
-    # Relacionamentos
-    movimentacao = db.relationship('Movimentacao', back_populates='itens')
-    apostila = db.relationship('Apostila', back_populates='itens_movimentacao')
-
-
 class Mensagem(db.Model):
     __tablename__ = 'mensagem'
 
@@ -147,39 +112,48 @@ class Mensagem(db.Model):
     usuario = db.relationship('Usuario', back_populates='mensagens')
 
 
-class EntregaForm(FlaskForm):
-    curso_id = SelectField('Curso', coerce=int, validators=[DataRequired()])
-    matricula_codigo = SelectField('Matrícula', coerce=str, validators=[Optional()])
-    observacao = TextAreaField('Observações', validators=[Optional()])
+class Movimentacao(db.Model):
+    __tablename__ = 'movimentacao'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    curso_id = db.Column(db.Integer, db.ForeignKey('curso.id'), nullable=False)
+    matricula_codigo = db.Column(db.String(20), db.ForeignKey('matricula.codigo'), nullable=True)
+    tipo = db.Column(db.String(10), nullable=False)
+    data = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Define um valor padrão
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    observacao = db.Column(db.Text)
+
+    # Relacionamentos
+    usuario = db.relationship('Usuario', back_populates='movimentacoes')
+    curso = db.relationship('Curso', back_populates='movimentacoes')
+    matricula_rel = db.relationship('Matricula', foreign_keys=[matricula_codigo])
+    itens = db.relationship('ItemMovimentacao', back_populates='movimentacao', cascade='all, delete-orphan')
+
+class ItemMovimentacao(db.Model):
+    __tablename__ = 'item_movimentacao'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    movimentacao_id = db.Column(db.Integer, db.ForeignKey('movimentacao.id'), nullable=False)
+    apostila_id = db.Column(db.String(20), db.ForeignKey('apostila.id', ondelete="SET NULL"), nullable=True)
+    quantidade = db.Column(db.Integer, nullable=False, server_default='1')
+
+    # Relacionamentos
+    movimentacao = db.relationship('Movimentacao', back_populates='itens')
+    apostila = db.relationship('Apostila', back_populates='itens_movimentacao')
 
 class VendaForm(FlaskForm):
-    # Opções estáticas para tipo de movimentação
-    tipo_choices: List[Tuple[str, str]] = [
-        ('venda', 'Venda'),
-        ('entrega', 'Entrega')
-    ]
-    tipo = SelectField('Tipo de Movimentação', choices=tipo_choices, validators=[DataRequired()])
-
-    # Opções estáticas para status
-    status_choices: List[Tuple[str, str]] = [
-        ('ativo', 'Ativo'),
-        ('inativo', 'Inativo'),
-        ('concluido', 'Concluído')
-    ]
-    status = SelectField('Status', choices=status_choices, validators=[DataRequired()])
-
-    # Outros campos
     curso_id = SelectField('Curso', coerce=int, validators=[DataRequired()])
-    matricula_codigo = SelectField('Matrícula', coerce=str, validators=[Optional()])
+    matricula_codigo = SelectField('Matrícula', coerce=str, validators=[DataRequired()])
     apostila_id = SelectField('Apostila', coerce=str, validators=[DataRequired()])
     quantidade = IntegerField('Quantidade', validators=[DataRequired(), NumberRange(min=1)])
     observacao = TextAreaField('Observações', validators=[Optional()])
 
-    def carregar_opcoes_dinamicas(self, cursos: List[Tuple[int, str]], matriculas: List[Tuple[str, str]], apostilas: List[Tuple[str, str]]):
-        """Carrega opções dinâmicas para os campos SelectField."""
-        self.curso_id.choices = cursos
-        self.matricula_codigo.choices = matriculas
-        self.apostila_id.choices = apostilas
+    def __init__(self, *args, **kwargs):
+        super(VendaForm, self).__init__(*args, **kwargs)
+        self.curso_id.choices = [(c.id, c.nome) for c in Curso.query.order_by(Curso.nome).all()]
+        self.curso_id.choices.insert(0, ('', 'Selecione um curso'))
+        self.matricula_codigo.choices = [('', 'Selecione um curso primeiro')]
+        self.apostila_id.choices = [('', 'Selecione um curso primeiro')]
 
 
 def verificar_estoque_baixo():

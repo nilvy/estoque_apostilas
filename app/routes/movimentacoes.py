@@ -41,32 +41,21 @@ def verificar_estoque_baixo():
         db.session.rollback()
         current_app.logger.error(f"Erro ao verificar estoque: {str(e)}")
 
+
 @bp.route('/entrega', methods=['GET', 'POST'])
 @login_required
 def entrega():
     form = EntregaForm()
 
-    if request.method == 'GET':
-        # Carrega apenas cursos (matrículas via AJAX)
-        cursos = Curso.query.order_by(Curso.nome).all()
-        form.curso_id.choices = [(str(c.id), c.nome) for c in cursos]
-        form.curso_id.choices.insert(0, ('', 'Selecione um curso'))
-
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         try:
-            # Verifica se os valores existem no banco
+            # Verifica se o curso existe
             curso = Curso.query.get(int(form.curso_id.data))
-            matricula = Matricula.query.filter_by(codigo=form.matricula_codigo.data).first()
-
             if not curso:
                 flash('Curso não encontrado', 'danger')
                 return redirect(url_for('movimentacoes.entrega'))
 
-            if form.matricula_codigo.data and not matricula:
-                flash('Matrícula não encontrada', 'danger')
-                return redirect(url_for('movimentacoes.entrega'))
-
-            # Cria a movimentação de entrega
+            # Cria a movimentação
             movimentacao = Movimentacao(
                 tipo='entrega',
                 usuario_id=current_user.id,
@@ -75,9 +64,9 @@ def entrega():
                 observacao=form.observacao.data
             )
             db.session.add(movimentacao)
-            db.session.flush()
+            db.session.flush()  # Garante que o ID da movimentação é gerado
 
-            # Verifica apostilas do curso e atualiza o estoque
+            # Atualiza o estoque das apostilas do curso
             apostilas = Apostila.query.filter_by(curso_id=curso.id).all()
             for apostila in apostilas:
                 if apostila.quantidade < 1:
@@ -102,6 +91,7 @@ def entrega():
             current_app.logger.error(f"Erro na entrega: {str(e)}", exc_info=True)
 
     return render_template('movimentacoes/entrega.html', form=form)
+
 
 @bp.route('/entrega/matriculas/<int:curso_id>', methods=['GET'])
 @login_required
@@ -196,26 +186,41 @@ def api_apostilas_por_curso(curso_id):
         'quantidade': a.quantidade
     } for a in apostilas])
 
+
 @bp.route('/movimentacao')
 @login_required
 def movimentacao():
     try:
-        # Consulta otimizada com joins explícitos
-        movimentacoes = db.session.query(Movimentacao)\
-            .options(
-                db.joinedload(Movimentacao.usuario),
-                db.joinedload(Movimentacao.curso),
-                db.joinedload(Movimentacao.matricula_rel),
-                db.joinedload(Movimentacao.itens).joinedload(ItemMovimentacao.apostila_rel)
-            )\
-            .order_by(Movimentacao.data.desc())\
-            .all()
+        current_app.logger.info("Acessando rota movimentacao")
+
+        # Filtros
+        curso_id = request.args.get('curso_id', type=int)
+        tipo = request.args.get('tipo', type=str)
+        page = request.args.get('page', 1, type=int)
+
+        query = db.session.query(Movimentacao).options(
+            db.joinedload(Movimentacao.usuario),
+            db.joinedload(Movimentacao.curso),
+            db.joinedload(Movimentacao.matricula_rel),
+            db.joinedload(Movimentacao.itens).joinedload(ItemMovimentacao.apostila)
+        )
+
+        if curso_id:
+            query = query.filter(Movimentacao.curso_id == curso_id)
+        if tipo:
+            query = query.filter(Movimentacao.tipo == tipo)
+
+        movimentacoes = query.order_by(Movimentacao.data.desc()).paginate(page=page, per_page=10)
+
+        # Carregar cursos para o filtro
+        cursos = Curso.query.order_by(Curso.nome).all()
 
         return render_template('movimentacoes/movimentacao.html',
-                            movimentacoes=movimentacoes)
+                               movimentacoes=movimentacoes,
+                               cursos=cursos)
     except Exception as e:
-        current_app.logger.error(f"Erro ao carregar movimentações: {str(e)}")
-        flash("Ocorreu um erro ao carregar as movimentações", "danger")
+        current_app.logger.error(f"Erro ao carregar movimentações: {str(e)}", exc_info=True)
+        flash("Ocorreu um erro ao carregar as movimentações. Verifique os logs para mais detalhes.", "danger")
         return redirect(url_for('main.admin'))
 
 @bp.route('/movimentacao/excluir/<int:id>', methods=['POST'])

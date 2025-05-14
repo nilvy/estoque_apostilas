@@ -1,16 +1,90 @@
 {% extends "base.html" %}
 
+{% block title %}Histórico de Movimentações{% endblock %}
+
+{% block extra_css %}
+<style>
+  .page-header {
+    background-color: white;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e3e6f0;
+    background-color: var(--color2);
+  }
+
+  .page-title {
+    font-weight: 600;
+    color: var(--color5);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--color4);
+    font-size: 0.9rem;
+  }
+
+  .search-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0.15rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e6f0;
+  }
+
+  .table-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 0.15rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e3e6f0;
+  }
+
+  .btn-primary-custom {
+    background-color: var(--color4);
+    border-color: var(--color4);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary-custom:hover {
+    background-color: var(--color5);
+    border-color: var(--color5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .pagination .page-link {
+    color: var(--color5);
+    border: 1px solid #dee2e6;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: var(--color4);
+    border-color: var(--color4);
+  }
+
+  .pagination .page-link:hover {
+    color: var(--color5);
+    background-color: #e9ecef;
+  }
+</style>
+{% endblock %}
+
 {% block header %}
 <div class="page-header">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-6">
         <h1 class="page-title">Histórico de Movimentações</h1>
-
+        <p class="page-subtitle">Lista completa de movimentações no sistema</p>
       </div>
       <div class="col-md-6 text-end">
-        <a href="{{ url_for('main.admin') }}" class="btn btn-primary-custom">
-          <i class="bi bi-arrow-left-circle"></i> Voltar
+        <a href="{{ url_for('main.admin') }}" class="btn btn-primary-custom me-2">
+          <i class="bi bi-arrow-left me-1"></i> Voltar
         </a>
       </div>
     </div>
@@ -19,27 +93,43 @@
 {% endblock %}
 
 {% block content %}
-
-
-
-  <!-- Mensagens flash -->
-  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %} {% for category, message in messages %}
-  <div class="alert alert-{{ category }} alert-dismissible fade show">
-    {{ message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<div class="container">
+  <div class="search-container">
+    <form method="GET" action="{{ url_for('movimentacoes.movimentacao') }}">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <select class="form-select" name="curso_id">
+            <option value="">Todos os cursos</option>
+            {% for curso in cursos %}
+            <option value="{{ curso.id }}" {% if request.args.get('curso_id') == curso.id|string %}selected{% endif %}>
+              {{ curso.nome }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" name="tipo">
+            <option value="">Todos os tipos</option>
+            <option value="venda" {% if request.args.get('tipo') == 'venda' %}selected{% endif %}>Venda</option>
+            <option value="entrega" {% if request.args.get('tipo') == 'entrega' %}selected{% endif %}>Entrega</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary-custom w-100">
+            <i class="bi bi-search me-1"></i> Buscar
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-  {% endfor %} {% endif %} {% endwith %}
 
-  <div class="table-responsive">
-    <table class="table table-striped">
+  <div class="table-container">
+    <table class="table table-striped text-center">
       <thead>
         <tr>
           <th>Data</th>
           <th>Tipo</th>
           <th>Curso</th>
-          <th>Aluno</th>
-          <th>Apostilas</th>
           <th>Quantidade</th>
           <th>Usuário</th>
           <th>Ações</th>
@@ -48,30 +138,14 @@
       <tbody>
         {% for mov in movimentacoes %}
         <tr>
-          <td>{{ mov.data.strftime('%d/%m/%Y %H:%M') }}</td>
+          <td>{{ mov.data.strftime('%d/%m/%Y %H:%M') if mov.data else 'Sem data' }}</td>
           <td>{{ 'Venda' if mov.tipo == 'venda' else 'Entrega' }}</td>
           <td>{{ mov.curso.nome if mov.curso else '' }}</td>
-          <td>
-            {% if mov.matricula_rel %} {{ mov.matricula_rel.nome }} ({{
-            mov.matricula_rel.codigo }}) {% else %} - {% endif %}
-          </td>
-          <td>
-            {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
-            loop.last %}, {% endif %} {% endfor %}
-          </td>
           <td>{{ mov.itens|sum(attribute='quantidade') }}</td>
           <td>{{ mov.usuario.nome }}</td>
           <td>
-            <form
-              action="{{ url_for('movimentacoes.excluir_movimentacao', id=mov.id) }}"
-              method="POST"
-              class="d-inline"
-            >
-              <input
-                type="hidden"
-                name="csrf_token"
-                value="{{ csrf_token() }}"
-              />
+            <form action="{{ url_for('movimentacoes.excluir_movimentacao', id=mov.id) }}" method="POST" class="d-inline">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
               <button type="submit" class="btn btn-danger btn-sm btn-excluir">
                 <i class="bi bi-trash"></i> Excluir
               </button>
@@ -80,15 +154,39 @@
         </tr>
         {% else %}
         <tr>
-          <td colspan="8" class="text-center">
-            Nenhuma movimentação registrada
-          </td>
+          <td colspan="6" class="text-center">Nenhuma movimentação registrada</td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+
+  {% if movimentacoes.pages > 1 %}
+  <nav aria-label="Paginação">
+    <ul class="pagination justify-content-center">
+      {% if movimentacoes.has_prev %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('movimentacoes.movimentacao', page=movimentacoes.prev_num, curso_id=request.args.get('curso_id'), tipo=request.args.get('tipo')) }}" aria-label="Anterior">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% endif %}
+      {% for page_num in movimentacoes.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+      <li class="page-item {% if page_num == movimentacoes.page %}active{% endif %}">
+        <a class="page-link" href="{{ url_for('movimentacoes.movimentacao', page=page_num, curso_id=request.args.get('curso_id'), tipo=request.args.get('tipo')) }}">
+          {{ page_num }}
+        </a>
+      </li>
+      {% endfor %}
+      {% if movimentacoes.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for('movimentacoes.movimentacao', page=movimentacoes.next_num, curso_id=request.args.get('curso_id'), tipo=request.args.get('tipo')) }}" aria-label="Próximo">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% endif %}
 </div>
-{% endblock %} {% block scripts %}
-<script src="{{ url_for('static', filename='js/movimentacao.js') }}"></script>
 {% endblock %}

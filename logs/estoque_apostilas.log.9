@@ -1,0 +1,91 @@
+2025-05-13 20:32:55,439 ERROR: Exception on /movimentacoes/entrega [GET] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 89, in entrega
+    return render_template('movimentacoes/entrega.html', form=form)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\entrega.html", line 1, in top-level template code
+    {% extends "base.html" %} {% block title %}Registrar Entrega{% endblock %} {%
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
+    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\entrega.html", line 25, in block 'content'
+    form.curso_id(class="form-select", id="curso_id") }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\core.py", line 164, in __call__
+    return self.meta.render_field(self, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\meta.py", line 64, in render_field
+    return field.widget(field, **render_kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\widgets\core.py", line 373, in __call__
+    for choice in field.iter_choices():
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\choices.py", line 124, in _choices_generator
+    selected = self.coerce(value) == self.data
+               ^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''
+2025-05-13 20:36:43,465 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-13 20:36:53,090 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
+2025-05-13 20:36:54,877 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
+2025-05-13 20:36:55,144 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
+2025-05-13 20:36:56,295 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
+2025-05-13 20:36:57,111 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
+2025-05-13 20:37:11,237 ERROR: Exception on /movimentacoes/entrega [POST] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+Traceback (most recent call last):
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 55, in entrega
+    if form.validate_on_submit():
+       ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_wtf\form.py", line 86, in validate_on_submit
+    return self.is_submitted() and self.validate(extra_validators=extra_validators)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\form.py", line 330, in validate
+    return super().validate(extra)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\form.py", line 147, in validate
+    if not field.validate(self, extra):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\core.py", line 223, in validate
+    self.pre_validate(form)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\choices.py", line 149, in pre_validate
+    raise TypeError(self.gettext("Choices cannot be None."))
+TypeError: Choices cannot be None.
