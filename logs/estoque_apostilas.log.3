@@ -1,111 +1,100 @@
-2025-05-13 23:53:40,015 ERROR: Exception on / [GET] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+2025-05-14 00:14:02,827 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:14:03,495 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:208]
 Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\main.py", line 11, in index
-    if current_user.is_authenticated:
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\werkzeug\local.py", line 311, in __get__
-    obj = instance._get_current_object()
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\werkzeug\local.py", line 515, in _get_current_object
-    return get_name(local())
-                    ^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 25, in <lambda>
-    current_user = LocalProxy(lambda: _get_user())
-                                      ^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 372, in _get_user
-    current_app.login_manager._load_user()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\login_manager.py", line 364, in _load_user
-    user = self._user_callback(user_id)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\auth.py", line 11, in load_user
-    return Usuario.query.get(int(user_id))
-           ^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_sqlalchemy\model.py", line 30, in __get__
-    return cls.query_class(
-           ^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\query.py", line 275, in __init__
-    self._set_entities(entities)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\query.py", line 288, in _set_entities
-    coercions.expect(
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
-    insp._post_inspect
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 1257, in __get__
-    obj.__dict__[self.__name__] = result = self.fget(obj)
-                                           ^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
-    self._check_configure()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
-    _configure_registries({self.registry}, cascade=True)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 4213, in _configure_registries
-    _do_configure_registries(registries, cascade)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 4250, in _do_configure_registries
-    raise e
-sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[Movimentacao(movimentacao)]'. Original exception was: Error creating backref 'movimentacoes' on relationship 'Movimentacao.matricula': property of that name exists on mapper 'Mapper[Matricula(matricula)]'
-2025-05-13 23:53:40,559 ERROR: Exception on / [GET] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 205, in movimentacao
+    return render_template('movimentacoes/movimentacao.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
+    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 59, in block 'content'
+    {% for item in mov.itens %} {{ item.apostila.nome }}{% if not loop.last %}, {% endif %} {% endfor %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel'
+2025-05-14 00:14:31,198 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-14 00:14:54,152 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:15:03,909 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:15:09,421 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:15:14,677 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:15:19,206 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:17:30,241 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:20:13,950 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:26:39,922 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:26:49,461 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:27:42,899 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:33:35,021 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:33:57,292 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:15,379 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-14 00:34:34,648 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:49,556 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:51,228 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:51,301 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:52,366 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:52,594 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:52,618 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:52,845 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:53,051 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:34:53,277 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:35:02,414 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:35:23,237 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:39:44,698 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:40:03,833 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-14 00:40:16,423 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:44:57,079 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:45:05,052 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:45:07,073 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:45:07,358 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:08,720 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-14 00:46:17,419 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:18,320 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:25,190 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:28,445 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:28,561 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:29,374 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:30,371 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 00:46:36,244 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 12:56:26,958 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+2025-05-14 12:57:27,303 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 12:57:28,322 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:222]
 Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\main.py", line 11, in index
-    if current_user.is_authenticated:
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\werkzeug\local.py", line 311, in __get__
-    obj = instance._get_current_object()
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\werkzeug\local.py", line 515, in _get_current_object
-    return get_name(local())
-                    ^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 25, in <lambda>
-    current_user = LocalProxy(lambda: _get_user())
-                                      ^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 372, in _get_user
-    current_app.login_manager._load_user()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\login_manager.py", line 364, in _load_user
-    user = self._user_callback(user_id)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\auth.py", line 11, in load_user
-    return Usuario.query.get(int(user_id))
-           ^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_sqlalchemy\model.py", line 30, in __get__
-    return cls.query_class(
-           ^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\query.py", line 275, in __init__
-    self._set_entities(entities)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\query.py", line 288, in _set_entities
-    coercions.expect(
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\coercions.py", line 388, in expect
-    insp._post_inspect
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 1257, in __get__
-    obj.__dict__[self.__name__] = result = self.fget(obj)
-                                           ^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 2724, in _post_inspect
-    self._check_configure()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 2401, in _check_configure
-    _configure_registries({self.registry}, cascade=True)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 4213, in _configure_registries
-    _do_configure_registries(registries, cascade)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\mapper.py", line 4250, in _do_configure_registries
-    raise e
-sqlalchemy.exc.InvalidRequestError: One or more mappers failed to initialize - can't proceed with initialization of other mappers. Triggering mapper: 'Mapper[Movimentacao(movimentacao)]'. Original exception was: Error creating backref 'movimentacoes' on relationship 'Movimentacao.matricula': property of that name exists on mapper 'Mapper[Matricula(matricula)]'
-2025-05-13 23:54:30,195 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 218, in movimentacao
+    return render_template('movimentacoes/movimentacao.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
+    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 151, in block 'content'
+    {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel'
+2025-05-14 12:57:34,308 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]

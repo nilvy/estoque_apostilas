@@ -1,91 +1,134 @@
-2025-05-13 20:32:55,439 ERROR: Exception on /movimentacoes/entrega [GET] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+2025-05-13 22:20:18,948 ERROR: Erro na entrega: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(17) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:102]
 Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 89, in entrega
-    return render_template('movimentacoes/entrega.html', form=form)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
-    return _render(app, template, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
-    rv = template.render(context)
-         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
-    self.environment.handle_exception()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\entrega.html", line 1, in top-level template code
-    {% extends "base.html" %} {% block title %}Registrar Entrega{% endblock %} {%
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
-    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\entrega.html", line 25, in block 'content'
-    form.curso_id(class="form-select", id="curso_id") }}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\core.py", line 164, in __call__
-    return self.meta.render_field(self, kwargs)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(17) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 78, in entrega
+    movimentacao_id=movimentacao.id,
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 938, in flush
+    return self._proxied.flush(objects=objects)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\meta.py", line 64, in render_field
-    return field.widget(field, **render_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\widgets\core.py", line 373, in __call__
-    for choice in field.iter_choices():
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\choices.py", line 124, in _choices_generator
-    selected = self.coerce(value) == self.data
-               ^^^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: ''
-2025-05-13 20:36:43,465 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
-2025-05-13 20:36:53,090 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
-2025-05-13 20:36:54,877 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
-2025-05-13 20:36:55,144 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
-2025-05-13 20:36:56,295 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
-2025-05-13 20:36:57,111 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
-2025-05-13 20:37:11,237 ERROR: Exception on /movimentacoes/entrega [POST] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(17) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-05-13 22:21:41,294 ERROR: Erro na entrega: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(18) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:102]
 Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 55, in entrega
-    if form.validate_on_submit():
-       ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_wtf\form.py", line 86, in validate_on_submit
-    return self.is_submitted() and self.validate(extra_validators=extra_validators)
-                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\form.py", line 330, in validate
-    return super().validate(extra)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\form.py", line 147, in validate
-    if not field.validate(self, extra):
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\core.py", line 223, in validate
-    self.pre_validate(form)
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\choices.py", line 149, in pre_validate
-    raise TypeError(self.gettext("Choices cannot be None."))
-TypeError: Choices cannot be None.
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(18) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 78, in entrega
+    movimentacao_id=movimentacao.id,
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 938, in flush
+    return self._proxied.flush(objects=objects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
+DETAIL:  Key (id)=(18) already exists.
+
+[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
+[parameters: {'curso_id': 15, 'matricula_codigo': 'DESG002', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': 'todas'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)

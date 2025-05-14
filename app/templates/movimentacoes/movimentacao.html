@@ -130,6 +130,8 @@
           <th>Data</th>
           <th>Tipo</th>
           <th>Curso</th>
+          <th>Aluno</th>
+          <th>Apostilas</th>
           <th>Quantidade</th>
           <th>Usuário</th>
           <th>Ações</th>
@@ -141,6 +143,18 @@
           <td>{{ mov.data.strftime('%d/%m/%Y %H:%M') if mov.data else 'Sem data' }}</td>
           <td>{{ 'Venda' if mov.tipo == 'venda' else 'Entrega' }}</td>
           <td>{{ mov.curso.nome if mov.curso else '' }}</td>
+          <td>
+            {% if mov.matricula_rel %}
+              {{ mov.matricula_rel.nome }} ({{ mov.matricula_rel.codigo }})
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td>
+            {% for item in mov.itens %}
+              {{ item.apostila.nome }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          </td>
           <td>{{ mov.itens|sum(attribute='quantidade') }}</td>
           <td>{{ mov.usuario.nome }}</td>
           <td>
@@ -154,7 +168,7 @@
         </tr>
         {% else %}
         <tr>
-          <td colspan="6" class="text-center">Nenhuma movimentação registrada</td>
+          <td colspan="8" class="text-center">Nenhuma movimentação registrada</td>
         </tr>
         {% endfor %}
       </tbody>

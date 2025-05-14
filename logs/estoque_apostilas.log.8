@@ -1,79 +1,40 @@
-2025-05-13 20:37:21,823 ERROR: Exception on /movimentacoes/venda [GET] [in C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py:1414]
-Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 2190, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1486, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1484, in full_dispatch_request
-    rv = self.dispatch_request()
-         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 1469, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask_login\utils.py", line 290, in decorated_view
-    return current_app.ensure_sync(func)(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 155, in venda
-    return render_template('movimentacoes/venda.html', form=form)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
-    return _render(app, template, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
-    rv = template.render(context)
-         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
-    self.environment.handle_exception()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\venda.html", line 1, in top-level template code
-    {% extends "base.html" %} {% block title %}Registrar Venda{% endblock %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
-    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\venda.html", line 34, in block 'content'
-    form.curso_id(class="form-select") }} {% if form.curso_id.errors %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\core.py", line 164, in __call__
-    return self.meta.render_field(self, kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\meta.py", line 64, in render_field
-    return field.widget(field, **render_kw)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\widgets\core.py", line 373, in __call__
-    for choice in field.iter_choices():
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\wtforms\fields\choices.py", line 124, in _choices_generator
-    selected = self.coerce(value) == self.data
-               ^^^^^^^^^^^^^^^^^^
-ValueError: invalid literal for int() with base 10: ''
-2025-05-13 20:37:26,898 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:202]
-2025-05-13 21:47:25,175 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
-2025-05-13 21:51:35,650 ERROR: Erro na entrega: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
-DETAIL:  Key (id)=(12) already exists.
+2025-05-13 22:23:03,883 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:29:15,025 ERROR: Erro na entrega: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "item_movimentacao" violates not-null constraint
+DETAIL:  Failing row contains (null, 34, DES_AFT_001, 1).
 
-[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
-[parameters: {'curso_id': 19, 'matricula_codigo': 'SEGT001', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': ''}]
+[SQL: INSERT INTO item_movimentacao (movimentacao_id, apostila_id, quantidade) SELECT p0::INTEGER, p1::VARCHAR, p2::INTEGER FROM (VALUES (%(movimentacao_id__0)s, %(apostila_id__0)s, %(quantidade__0)s, 0), (%(movimentacao_id__1)s, %(apostila_id__1)s, %(quan ... 443 characters truncated ...  p2, sen_counter) ORDER BY sen_counter RETURNING item_movimentacao.id, item_movimentacao.id AS id__1]
+[parameters: {'movimentacao_id__0': 34, 'apostila_id__0': 'DES_AFT_001', 'quantidade__0': 1, 'movimentacao_id__1': 34, 'apostila_id__1': 'DES_COA_001', 'quantidade__1': 1, 'movimentacao_id__2': 34, 'apostila_id__2': 'DES_COR_001', 'quantidade__2': 1, 'movimentacao_id__3': 34, 'apostila_id__3': 'DES_ILL_001', 'quantidade__3': 1, 'movimentacao_id__4': 34, 'apostila_id__4': 'DES_INF_001', 'quantidade__4': 1, 'movimentacao_id__5': 34, 'apostila_id__5': 'DES_PHA_001', 'quantidade__5': 1, 'movimentacao_id__6': 34, 'apostila_id__6': 'DES_PHO_001', 'quantidade__6': 1, 'movimentacao_id__7': 34, 'apostila_id__7': 'DES_PRE_001', 'quantidade__7': 1}]
 (Background on this error at: https://sqlalche.me/e/20/gkpj) [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:102]
 Traceback (most recent call last):
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
-    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2115, in _exec_insertmany_context
+    dialect.do_execute(
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
     cursor.execute(statement, parameters)
-psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "movimentacao_pkey"
-DETAIL:  Key (id)=(12) already exists.
+psycopg2.errors.NotNullViolation: null value in column "id" of relation "item_movimentacao" violates not-null constraint
+DETAIL:  Failing row contains (null, 34, DES_AFT_001, 1).
 
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 78, in entrega
-    db.session.flush()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 938, in flush
-    return self._proxied.flush(objects=objects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 95, in entrega
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\scoping.py", line 599, in commit
+    return self._proxied.commit()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 2032, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
     self._flush(objects)
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
@@ -88,7 +49,7 @@ Traceback (most recent call last):
     util.preloaded.orm_persistence.save_obj(
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
     _emit_insert_statements(
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\orm\persistence.py", line 1143, in _emit_insert_statements
     result = connection.execute(
              ^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
@@ -100,20 +61,33 @@ Traceback (most recent call last):
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1638, in _execute_clauseelement
     ret = self._execute_context(
           ^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1843, in _execute_context
-    return self._exec_single_context(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1983, in _exec_single_context
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1841, in _execute_context
+    return self._exec_insertmany_context(dialect, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2123, in _exec_insertmany_context
     self._handle_dbapi_exception(
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2352, in _handle_dbapi_exception
     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 1964, in _exec_single_context
-    self.dialect.do_execute(
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\base.py", line 2115, in _exec_insertmany_context
+    dialect.do_execute(
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\sqlalchemy\engine\default.py", line 942, in do_execute
     cursor.execute(statement, parameters)
-sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "movimentacao_pkey"
-DETAIL:  Key (id)=(12) already exists.
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "item_movimentacao" violates not-null constraint
+DETAIL:  Failing row contains (null, 34, DES_AFT_001, 1).
 
-[SQL: INSERT INTO movimentacao (curso_id, matricula_codigo, tipo, usuario_id, observacao) VALUES (%(curso_id)s, %(matricula_codigo)s, %(tipo)s, %(usuario_id)s, %(observacao)s) RETURNING movimentacao.id, movimentacao.data]
-[parameters: {'curso_id': 19, 'matricula_codigo': 'SEGT001', 'tipo': 'entrega', 'usuario_id': 2, 'observacao': ''}]
+[SQL: INSERT INTO item_movimentacao (movimentacao_id, apostila_id, quantidade) SELECT p0::INTEGER, p1::VARCHAR, p2::INTEGER FROM (VALUES (%(movimentacao_id__0)s, %(apostila_id__0)s, %(quantidade__0)s, 0), (%(movimentacao_id__1)s, %(apostila_id__1)s, %(quan ... 443 characters truncated ...  p2, sen_counter) ORDER BY sen_counter RETURNING item_movimentacao.id, item_movimentacao.id AS id__1]
+[parameters: {'movimentacao_id__0': 34, 'apostila_id__0': 'DES_AFT_001', 'quantidade__0': 1, 'movimentacao_id__1': 34, 'apostila_id__1': 'DES_COA_001', 'quantidade__1': 1, 'movimentacao_id__2': 34, 'apostila_id__2': 'DES_COR_001', 'quantidade__2': 1, 'movimentacao_id__3': 34, 'apostila_id__3': 'DES_ILL_001', 'quantidade__3': 1, 'movimentacao_id__4': 34, 'apostila_id__4': 'DES_INF_001', 'quantidade__4': 1, 'movimentacao_id__5': 34, 'apostila_id__5': 'DES_PHA_001', 'quantidade__5': 1, 'movimentacao_id__6': 34, 'apostila_id__6': 'DES_PHO_001', 'quantidade__6': 1, 'movimentacao_id__7': 34, 'apostila_id__7': 'DES_PRE_001', 'quantidade__7': 1}]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-05-13 22:31:10,881 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:32:16,572 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:57:20,501 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:57:21,066 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 22:57:25,220 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:05:06,607 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:06:45,059 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,342 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,344 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,345 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:30,442 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:53,661 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]
+2025-05-13 23:12:56,060 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:217]

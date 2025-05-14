@@ -1,21 +1,6 @@
-2025-05-13 23:59:28,141 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:209]
+2025-05-14 12:57:37,358 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:222]
 Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 200, in movimentacao
-    db.joinedload(Movimentacao.matricula_rel),  # Corrigido aqui
-                  ^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: type object 'Movimentacao' has no attribute 'matricula'. Did you mean: 'matricula_rel'?
-2025-05-13 23:59:31,892 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:193]
-2025-05-13 23:59:31,897 ERROR: Erro ao carregar movimentações: type object 'Movimentacao' has no attribute 'matricula' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:209]
-Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 200, in movimentacao
-    db.joinedload(Movimentacao.matricula_rel),  # Corrigido aqui
-                  ^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: type object 'Movimentacao' has no attribute 'matricula'. Did you mean: 'matricula_rel'?
-2025-05-14 00:01:34,199 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
-2025-05-14 00:01:40,154 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
-2025-05-14 00:01:41,129 ERROR: Erro ao carregar movimentações: 'None' has no attribute 'strftime' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:208]
-Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 205, in movimentacao
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 218, in movimentacao
     return render_template('movimentacoes/movimentacao.html',
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
@@ -33,46 +18,17 @@ Traceback (most recent call last):
   File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
     {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 51, in block 'content'
-    <td>{{ mov.data.strftime('%d/%m/%Y %H:%M') }}</td>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\utils.py", line 92, in from_obj
-    if hasattr(obj, "jinja_pass_arg"):
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-jinja2.exceptions.UndefinedError: 'None' has no attribute 'strftime'
-2025-05-14 00:07:58,502 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
-2025-05-14 00:07:59,155 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:208]
-Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 205, in movimentacao
-    return render_template('movimentacoes/movimentacao.html',
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
-    return _render(app, template, context)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
-    rv = template.render(context)
-         ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
-    self.environment.handle_exception()
-  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
-    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 59, in block 'content'
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 151, in block 'content'
     {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
     ^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 490, in getattr
     return getattr(obj, attribute)
            ^^^^^^^^^^^^^^^^^^^^^^^
 jinja2.exceptions.UndefinedError: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel'
-2025-05-14 00:09:33,064 INFO: Estoque de Apostilas startup [in C:\Users\nilva\estoque_apostilas\app\__init__.py:59]
-2025-05-14 00:09:41,316 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
-2025-05-14 00:09:42,018 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:208]
+2025-05-14 12:57:37,467 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 12:57:37,520 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:222]
 Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 205, in movimentacao
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 218, in movimentacao
     return render_template('movimentacoes/movimentacao.html',
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
@@ -90,17 +46,18 @@ Traceback (most recent call last):
   File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
     {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 59, in block 'content'
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 151, in block 'content'
     {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
     ^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 490, in getattr
     return getattr(obj, attribute)
            ^^^^^^^^^^^^^^^^^^^^^^^
 jinja2.exceptions.UndefinedError: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel'
-2025-05-14 00:13:58,673 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
-2025-05-14 00:13:59,334 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:208]
+2025-05-14 12:57:37,950 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 12:57:38,149 INFO: Acessando rota movimentacao [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:194]
+2025-05-14 12:57:38,251 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:222]
 Traceback (most recent call last):
-  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 205, in movimentacao
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 218, in movimentacao
     return render_template('movimentacoes/movimentacao.html',
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
@@ -118,8 +75,35 @@ Traceback (most recent call last):
   File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
     {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 59, in block 'content'
-    {% for item in mov.itens %} {{ item.apostila.nome }}{% if not loop.last %}, {% endif %} {% endfor %}
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 151, in block 'content'
+    {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+jinja2.exceptions.UndefinedError: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel'
+2025-05-14 12:57:38,794 ERROR: Erro ao carregar movimentações: 'app.models.ItemMovimentacao object' has no attribute 'apostila_rel' [in C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py:222]
+Traceback (most recent call last):
+  File "C:\Users\nilva\estoque_apostilas\app\routes\movimentacoes.py", line 218, in movimentacao
+    return render_template('movimentacoes/movimentacao.html',
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\nilva\estoque_apostilas\app\templates\base.html", line 294, in top-level template code
+    {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nilva\estoque_apostilas\app\templates\movimentacoes\movimentacao.html", line 151, in block 'content'
+    {% for item in mov.itens %} {{ item.apostila_rel.nome }}{% if not
     ^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\nilva\AppData\Roaming\Python\Python312\site-packages\jinja2\environment.py", line 490, in getattr
     return getattr(obj, attribute)
